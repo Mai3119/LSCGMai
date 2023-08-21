@@ -539,7 +539,6 @@ export class ItemUseModule extends BaseModule {
 						var item = InventoryGet(acted, "ItemHandheld");
 						if (!item)
 							return false;
-						var OnCooldown = this.failedStealTime > 0 && (this.failedStealTime + 60000) > CommonTime(); // 1 minute cooldown on steal attempts.
 						var validParams = ValidationCreateDiffParams(acted, acting.MemberNumber!);
 						var allowed = ValidationCanRemoveItem(item!, validParams, false);
 						return !OnCooldown && allowed && !InventoryGet(acting, "ItemHandheld");
@@ -697,7 +696,7 @@ export class ItemUseModule extends BaseModule {
 	
 	getRollMod(C: Character, Opponent?: Character, isAggressor: boolean = false): number {
 		// Dominant vs Submissive ==> -3 to +3 modifier
-		let dominanceMod = Math.floor(this.getDominance(C) / 33);
+		let dominanceMod = Math.floor(this.getDominance(C) / 2);
 		// +5 if we own our opponent
 		let ownershipMod = Opponent?.IsOwnedByMemberNumber(C.MemberNumber!) ? 5 : 0 ?? 0;
 		// -4 if we're restrained
